@@ -8,7 +8,7 @@ part of 'tink_result.dart';
 
 TinkResult _$TinkResultFromJson(Map<String, dynamic> json) {
   return TinkResult(
-    _$enumDecodeNullable(_$StateEnumMap, json['state']),
+    _$enumDecodeNullable(_$TinkResultStateEnumMap, json['state']),
     (json['data'] as Map<String, dynamic>)?.map(
       (k, e) => MapEntry(k, e as String),
     ),
@@ -17,7 +17,7 @@ TinkResult _$TinkResultFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$TinkResultToJson(TinkResult instance) =>
     <String, dynamic>{
-      'state': _$StateEnumMap[instance.state],
+      'state': _$TinkResultStateEnumMap[instance.state],
       'data': instance.data,
     };
 
@@ -53,8 +53,8 @@ T _$enumDecodeNullable<T>(
   return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
 }
 
-const _$StateEnumMap = {
-  State.Success: 'success',
-  State.Error: 'error',
-  State.UserCancelled: 'user_cancelled',
+const _$TinkResultStateEnumMap = {
+  TinkResultState.Success: 'success',
+  TinkResultState.Error: 'error',
+  TinkResultState.UserCancelled: 'user_cancelled',
 };

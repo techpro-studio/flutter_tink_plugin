@@ -8,7 +8,7 @@ class _StateValues {
   static const userCancelled = "user_cancelled";
 }
 
-enum State {
+enum TinkResultState {
   @JsonValue(_StateValues.success)
   Success,
   @JsonValue(_StateValues.error)
@@ -19,7 +19,7 @@ enum State {
 
 @JsonSerializable()
 class TinkResult {
-  final State state;
+  final TinkResultState state;
   final Map<String, String> data;
 
   TinkResult(this.state, this.data);

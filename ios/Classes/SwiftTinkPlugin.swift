@@ -63,8 +63,8 @@ public class SwiftTinkPlugin: NSObject, FlutterPlugin, UIAdaptivePresentationCon
         self.finish()
     }
 
-    open func application(_ application: UIApplication, handleOpen url: URL) -> Bool {
-        if url.host == "tinkauth" {
+    func handleURL(url: URL) -> Bool {
+        if self.callback != nil {
             if let tinkData = TinkAuthDataExtractor.extract(url: url) {
                 self.finishWith(tinkData: tinkData)
                 return true
@@ -72,6 +72,10 @@ public class SwiftTinkPlugin: NSObject, FlutterPlugin, UIAdaptivePresentationCon
             return false
         }
         return false;
+    }
+
+    public func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        handleURL(url: url)
     }
 
     private func authenticate(with url: URL){
