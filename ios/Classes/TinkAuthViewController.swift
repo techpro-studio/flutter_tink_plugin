@@ -45,7 +45,7 @@ final class TinkAuthViewController: UIViewController, WKNavigationDelegate, WKUI
         } else {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.close))
         }
-
+        title = "Tink authentication"
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webView.translatesAutoresizingMaskIntoConstraints = false

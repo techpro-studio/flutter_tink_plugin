@@ -24,10 +24,21 @@ public class SwiftTinkPlugin: NSObject, FlutterPlugin, UIAdaptivePresentationCon
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         if call.method == "authenticate" {
-            guard let args = (call.arguments as? [String:Any]),
-                  let urlString = args["url"] as? String,
-                  let url = URL(string: urlString) else {
-                result(invalidArgumentsError(message: "Should be valid URL as argument"))
+            guard let dict = call.arguments as? [String:Any] else {
+                result(invalidArgumentsError(message: "Input should be a dict"))
+                return
+            }
+            guard let urlString = dict["url"] as? String else {
+                result(invalidArgumentsError(message: "String `url` not exists"))
+                return
+            }
+            guard let url = URL(string: urlString) else {
+                result(invalidArgumentsError(message: "URL should be valid"))
+                return
+            }
+
+            guard ["http", "https"].contains(url.scheme) else {
+                result(invalidArgumentsError(message: "URL should be http or https"))
                 return
             }
             self.callback = result

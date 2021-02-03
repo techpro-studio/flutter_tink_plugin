@@ -10,6 +10,7 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.PluginRegistry
 import android.content.Intent
+import android.webkit.URLUtil
 
 class TinkPlugin: FlutterPlugin, ActivityAware, MethodChannel.MethodCallHandler, PluginRegistry.ActivityResultListener {
     private lateinit var channel : MethodChannel
@@ -23,9 +24,18 @@ class TinkPlugin: FlutterPlugin, ActivityAware, MethodChannel.MethodCallHandler,
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: MethodChannel.Result) {
         if (call.method == "authenticate") {
+            val errCode = "studio.techpro.tink_plugin.error.invalid_input"
             val urlString = call.argument("url") as? String
-            if (urlString == null || Uri.parse(urlString) == null){
-                result.error("studio.techpro.tink_plugin.error.invalid_input", "Should be valid URL as argument", null)
+            if (urlString == null) {
+                result.error(errCode, "String `url` not exists", null)
+                return
+            }
+            if (!URLUtil.isValidUrl(urlString)){
+                result.error(errCode, "URL should be valid", null)
+                return
+            }
+            if (!URLUtil.isHttpUrl(urlString) && !URLUtil.isHttpsUrl(urlString)){
+                result.error(errCode, "URL should be http or https", null)
                 return
             }
             this.result = result
@@ -65,12 +75,13 @@ class TinkPlugin: FlutterPlugin, ActivityAware, MethodChannel.MethodCallHandler,
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-
+        this.activityPluginBinding.removeActivityResultListener(this)
+        this.activityPluginBinding = binding
+        binding.addActivityResultListener(this)
     }
 
     override fun onDetachedFromActivity() {
         activityPluginBinding.removeActivityResultListener(this)
-
     }
 
 
