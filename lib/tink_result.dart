@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+
 part 'tink_result.g.dart';
 
 class _StateValues {
@@ -8,12 +9,12 @@ class _StateValues {
 }
 
 enum State {
-@JsonValue(_StateValues.success)
-Success,
-@JsonValue(_StateValues.error)
-Error,
-@JsonValue(_StateValues.userCancelled)
-UserCancelled
+  @JsonValue(_StateValues.success)
+  Success,
+  @JsonValue(_StateValues.error)
+  Error,
+  @JsonValue(_StateValues.userCancelled)
+  UserCancelled
 }
 
 @JsonSerializable()
@@ -25,6 +26,6 @@ class TinkResult {
 
   Map<String, dynamic> toJson() => _$TinkResultToJson(this);
 
-  factory TinkResult.fromJson(Map<String, dynamic> json) => _$TinkResultFromJson(json);
-
+  factory TinkResult.fromJson(Map<String, dynamic> json) =>
+      _$TinkResultFromJson(json);
 }

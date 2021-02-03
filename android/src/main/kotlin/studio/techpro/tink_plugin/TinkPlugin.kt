@@ -23,7 +23,7 @@ class TinkPlugin: FlutterPlugin, ActivityAware, MethodChannel.MethodCallHandler,
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: MethodChannel.Result) {
         if (call.method == "authenticate") {
-            val urlString = (call.arguments as List<*>).first() as? String
+            val urlString = call.argument("url") as? String
             if (urlString == null || Uri.parse(urlString) == null){
                 result.error("studio.techpro.tink_plugin.error.invalid_input", "Should be valid URL as argument", null)
                 return

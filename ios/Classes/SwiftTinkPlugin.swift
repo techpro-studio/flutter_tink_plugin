@@ -24,7 +24,9 @@ public class SwiftTinkPlugin: NSObject, FlutterPlugin, UIAdaptivePresentationCon
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         if call.method == "authenticate" {
-            guard let args = (call.arguments as? [String]), let url = args.first.flatMap(URL.init) else{
+            guard let args = (call.arguments as? [String:Any]),
+                  let urlString = args["url"] as? String,
+                  let url = URL(string: urlString) else {
                 result(invalidArgumentsError(message: "Should be valid URL as argument"))
                 return
             }

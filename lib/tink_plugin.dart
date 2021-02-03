@@ -9,7 +9,7 @@ class TinkPlugin {
   static const _channel = MethodChannel("studio.techpro.tink_plugin");
 
   static Future<TinkResult> authenticateWithURL(String url) async {
-    final result = await _channel.invokeMethod("authenticate", [url]);
+    final result = await _channel.invokeMethod("authenticate", {"url": url});
     return TinkResult.fromJson(jsonDecode(result));
   }
 }
