@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> authenticate() async {
-    final result =  await TinkPlugin.authenticateWithURL("https://link.tink.com/1.0/authorize/?client_id=aee8e118f89a4cce9e298b1b539cce8f&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&scope=accounts:read,investments:read,transactions:read,user:read&market=SE&locale=en_US&test=true&app_uri=gethintapp://authorize");
+    final result =  await TinkPlugin.authenticateWithURL("tinkurl");
     if (!mounted) return;
 
     setState(() {
